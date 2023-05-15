@@ -34,6 +34,7 @@ public class CustomerUsersDetailsService implements UserDetailsService {
     }
     
     public com.inn.shop.POJO.User getUserDetail() {
+ 
         return userDetail;
     }
 }
