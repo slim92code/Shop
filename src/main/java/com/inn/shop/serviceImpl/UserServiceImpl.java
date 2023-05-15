@@ -35,8 +35,7 @@ public class UserServiceImpl implements UserService{
                 {
                     return ShopUtils.getResponseEntity( "Email alredy exist.",HttpStatus.BAD_REQUEST);        
                 } 
-            } 
-            else {
+            } else {
             return ShopUtils.getResponseEntity(ShopConstents.INVALID_DATA, HttpStatus.BAD_REQUEST);
             }
         }catch (Exception ex){
@@ -47,8 +46,7 @@ public class UserServiceImpl implements UserService{
         
     private boolean ValidatedSignUpMap(Map<String, String> requestMap){
         if(requestMap.containsKey("name") && requestMap.containsKey("contactNumber")
-                && requestMap.containsKey("email") && requestMap.containsKey("password"))
-        {
+                && requestMap.containsKey("email") && requestMap.containsKey("password")){
             return true;
         }
         return false;
@@ -60,7 +58,7 @@ public class UserServiceImpl implements UserService{
         
         user.setName(requestMap.get("name"));
         user.setContactNumber(requestMap.get("contactNumber"));
-        user.setEmail(requestMap.get("emal"));
+        user.setEmail(requestMap.get("email"));
         user.setPassword("password");
         user.setStatus("false");
         user.setRole("user");
@@ -68,7 +66,4 @@ public class UserServiceImpl implements UserService{
         return user;
     }
     
-    public void nebitnaFunkcija(){
-        int a=5;
-    }
 }

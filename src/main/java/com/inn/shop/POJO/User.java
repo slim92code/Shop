@@ -1,16 +1,12 @@
 package com.inn.shop.POJO;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.Table;
-import java.io.Serializable;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 
 @NamedQuery(name = "User.findByEmailId", query = "SELECT u FROM User u WHERE u.email = :email")
