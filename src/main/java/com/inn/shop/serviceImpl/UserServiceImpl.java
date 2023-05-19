@@ -1,5 +1,6 @@
 package com.inn.shop.serviceImpl;
 
+import com.google.common.base.Strings;
 import com.inn.shop.JWT.CustomerUsersDetailsService;
 import com.inn.shop.JWT.JwtFilter;
 import com.inn.shop.JWT.JwtUtil;
@@ -158,5 +159,42 @@ public class UserServiceImpl implements UserService {
             emailUtils.sendSimpleMessage(jwtFilter.getCurrentUser(), "Account Disabled",
                     "USER: " + user + "\n is disabled by \nADMIN: " + jwtFilter.getCurrentUser(), allAdmins);
         }
+    }
+
+    @Override
+    public ResponseEntity<String> checkToken() {
+        return ShopUtils.getResponseEntity("true", HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<String> changePassword(Map<String, String> requestMap) {
+        try{
+            User userObj = userDao.findByEmail(jwtFilter.getCurrentUser());
+            if(!userObj.equals(null)){
+                if(userObj.getPassword().equals(requestMap.get("oldPassword"))){
+                    userObj.setPassword(requestMap.get("newPassword"));
+                    userDao.save(userObj);
+                    return ShopUtils.getResponseEntity("Password Updated Succesfully", HttpStatus.OK);
+                }
+                return ShopUtils.getResponseEntity("Incorrect Old Password", HttpStatus.BAD_REQUEST);
+            }
+            return ShopUtils.getResponseEntity(ShopConstents.SOMETHING_WENT_WRONG ,HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return ShopUtils.getResponseEntity(ShopConstents.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> forgotPasswrod(Map<String, String> requestMap) {
+        try{
+            User user = userDao.findByEmail(requestMap.get("email"));
+            if(!Objects.isNull(user) && !Strings.isNullOrEmpty(user.getEmail()))
+                emailUtils.forgotMail(user.getEmail(), "Credentials by Shop Managment System", user.getPassword());
+            return ShopUtils.getResponseEntity("Chek your mail for Credential.", HttpStatus.OK);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return ShopUtils.getResponseEntity(ShopConstents.SOMTHING_WENT_WRONG , HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
