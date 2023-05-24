@@ -1,4 +1,4 @@
-package constents;
+package com.inn.shop.constents;
 
 
 public class ShopConstents {

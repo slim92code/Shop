@@ -10,7 +10,7 @@ import com.inn.shop.service.UserService;
 import com.inn.shop.utils.EmailUtils;
 import com.inn.shop.utils.ShopUtils;
 import com.inn.shop.wrapper.UserWrapper;
-import constents.ShopConstents;
+import com.inn.shop.constents.ShopConstents;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
