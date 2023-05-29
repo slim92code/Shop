@@ -1,7 +1,7 @@
 package com.inn.shop.restImpl;
 
 import com.inn.shop.POJO.Category;
-import com.inn.shop.constents.ShopConstents;
+import com.inn.shop.constents.ShopConstants;
 import com.inn.shop.rest.CategoryRest;
 import com.inn.shop.service.CategoryService;
 import com.inn.shop.utils.ShopUtils;
@@ -14,39 +14,39 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class CategoryRestImpl implements CategoryRest{
+public class CategoryRestImpl implements CategoryRest {
 
     @Autowired
     CategoryService categoryService;
     
     @Override
     public ResponseEntity<String> addNewCategory(Map<String, String> requestMap) {
-        try{
+        try {
             return categoryService.addNewCategory(requestMap);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return ShopUtils.getResponseEntity(ShopConstents.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ShopUtils.getResponseEntity(ShopConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
     public ResponseEntity<List<Category>> getAllCategory(String filterValue) {
-        try{
+        try {
             return categoryService.getAllCategory(filterValue);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return new ResponseEntity(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
     public ResponseEntity<String> updateCategory(Map<String, String> requestMap) {
-        try{
+        try {
             return categoryService.updateCategory(requestMap);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return ShopUtils.getResponseEntity(ShopConstents.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ShopUtils.getResponseEntity(ShopConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
 }

@@ -4,7 +4,7 @@ import com.inn.shop.rest.UserRest;
 import com.inn.shop.service.UserService;
 import com.inn.shop.utils.ShopUtils;
 import com.inn.shop.wrapper.UserWrapper;
-import com.inn.shop.constents.ShopConstents;
+import com.inn.shop.constents.ShopConstants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +27,7 @@ public class UserRestImpl implements UserRest{
         }catch(Exception ex){
             ex.printStackTrace();
         }
-        return ShopUtils.getResponseEntity(ShopConstents.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ShopUtils.getResponseEntity(ShopConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
         
     }
 
@@ -39,7 +39,7 @@ public class UserRestImpl implements UserRest{
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        return ShopUtils.getResponseEntity(ShopConstents.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ShopUtils.getResponseEntity(ShopConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
     @Override
@@ -59,7 +59,7 @@ public class UserRestImpl implements UserRest{
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        return ShopUtils.getResponseEntity(ShopConstents.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ShopUtils.getResponseEntity(ShopConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class UserRestImpl implements UserRest{
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        return ShopUtils.getResponseEntity(ShopConstents.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ShopUtils.getResponseEntity(ShopConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class UserRestImpl implements UserRest{
         }catch (Exception ex){
             
         }
-        return ShopUtils.getResponseEntity(ShopConstents.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ShopUtils.getResponseEntity(ShopConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class UserRestImpl implements UserRest{
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        return ShopUtils.getResponseEntity(ShopConstents.SOMTHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ShopUtils.getResponseEntity(ShopConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
      
     

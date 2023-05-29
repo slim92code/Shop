@@ -10,7 +10,7 @@ import com.inn.shop.service.UserService;
 import com.inn.shop.utils.EmailUtils;
 import com.inn.shop.utils.ShopUtils;
 import com.inn.shop.wrapper.UserWrapper;
-import com.inn.shop.constents.ShopConstents;
+import com.inn.shop.constents.ShopConstants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -60,12 +60,12 @@ public class UserServiceImpl implements UserService {
                     return ShopUtils.getResponseEntity("Email already exists.", HttpStatus.BAD_REQUEST);
                 }
             } else {
-                return ShopUtils.getResponseEntity(ShopConstents.INVALID_DATA, HttpStatus.BAD_REQUEST);
+                return ShopUtils.getResponseEntity(ShopConstants.INVALID_DATA, HttpStatus.BAD_REQUEST);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return ShopUtils.getResponseEntity(ShopConstents.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ShopUtils.getResponseEntity(ShopConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private boolean validateSignUpMap(Map<String, String> requestMap) {
@@ -142,12 +142,12 @@ public class UserServiceImpl implements UserService {
                     return ShopUtils.getResponseEntity("User id doesn't exist", HttpStatus.OK);
                 }
             } else {
-                return ShopUtils.getResponseEntity(ShopConstents.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
+                return ShopUtils.getResponseEntity(ShopConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return ShopUtils.getResponseEntity(ShopConstents.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ShopUtils.getResponseEntity(ShopConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private void sendMailToAllAdmin(String status, User user, List<String> allAdmins) {
@@ -178,11 +178,11 @@ public class UserServiceImpl implements UserService {
                 }
                 return ShopUtils.getResponseEntity("Incorrect Old Password", HttpStatus.BAD_REQUEST);
             }
-            return ShopUtils.getResponseEntity(ShopConstents.SOMETHING_WENT_WRONG ,HttpStatus.INTERNAL_SERVER_ERROR);
+            return ShopUtils.getResponseEntity(ShopConstants.SOMETHING_WENT_WRONG ,HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        return ShopUtils.getResponseEntity(ShopConstents.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ShopUtils.getResponseEntity(ShopConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
@@ -195,6 +195,6 @@ public class UserServiceImpl implements UserService {
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        return ShopUtils.getResponseEntity(ShopConstents.SOMTHING_WENT_WRONG , HttpStatus.INTERNAL_SERVER_ERROR);
+        return ShopUtils.getResponseEntity(ShopConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

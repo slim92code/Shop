@@ -7,7 +7,7 @@ import com.inn.shop.POJO.Category;
 import com.inn.shop.dao.CategoryDao;
 import com.inn.shop.service.CategoryService;
 import com.inn.shop.utils.ShopUtils;
-import com.inn.shop.constents.ShopConstents;
+import com.inn.shop.constents.ShopConstants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
 @Service
@@ -37,12 +36,12 @@ public class CategoryServiceImpl implements CategoryService {
                     return ShopUtils.getResponseEntity("Category Added Successfully", HttpStatus.OK);
                 }
             } else {
-                return ShopUtils.getResponseEntity(ShopConstents.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
+                return ShopUtils.getResponseEntity(ShopConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return ShopUtils.getResponseEntity(ShopConstents.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ShopUtils.getResponseEntity(ShopConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private boolean validateCategoryMap(Map<String, String> requestMap, boolean validateId) {
@@ -92,14 +91,14 @@ public class CategoryServiceImpl implements CategoryService {
                         return ShopUtils.getResponseEntity("Category id does not exist", HttpStatus.OK);
                     }
                 }
-                return ShopUtils.getResponseEntity(ShopConstents.INVALID_DATA, HttpStatus.BAD_REQUEST);
+                return ShopUtils.getResponseEntity(ShopConstants.INVALID_DATA, HttpStatus.BAD_REQUEST);
             }else{
-                return ShopUtils.getResponseEntity(ShopConstents.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
+                return ShopUtils.getResponseEntity(ShopConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
             }
         }catch(Exception ex){
             ex.printStackTrace();
         }
-        return ShopUtils.getResponseEntity(ShopConstents.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ShopUtils.getResponseEntity(ShopConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     

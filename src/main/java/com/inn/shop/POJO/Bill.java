@@ -6,31 +6,47 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-@NamedQuery(name = "Category.getAllCategory", query = "select c from Category c where c.id in(select p.category from Product p where p.status='true')")
 
 @Data
 @Entity
 @DynamicUpdate
 @DynamicInsert
-@Table(name = "category")
-public class Category implements Serializable{
+@Table(name = "bill")
+public class Bill implements Serializable{
     
     private static final long serialVersionUID = 1L;
-    
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     
+    @Column(name = "uuid")
+    private String uuid;
+    
     @Column(name = "name")
     private String name;
     
+    @Column(name = "email")
+    private String email;
     
+    @Column(name = "contactnumber")
+    private String contactNumber;
+    
+    @Column(name = "paymentmethod")
+    private String paymentMethod;
+    
+    @Column(name = "total")
+    private Integer total;
+    
+    @Column(name = "productdetails", columnDefinition = "json")
+    private String productDetail;
+    
+    @Column(name = "createby")
+    private String createBy;
 }
