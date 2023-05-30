@@ -19,10 +19,17 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.pdfbox.io.IOUtils;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -79,8 +86,8 @@ public class BillServiceImpl implements BillService {
                 }
                 document.add(table);
                 
-                Paragraph footer = new Paragraph("Total : "+requestMap.get("totalAmount") + "){"
-                        + "Thank you fror visiting.Please visit again!!", getFont("Data"));
+                Paragraph footer = new Paragraph("Total : "+requestMap.get("totalAmount") + "\n"
+                        + "Thank you for visiting us.Please visit us again!!", getFont("Data"));
                 document.add(footer);
                 document.close();
                 return new ResponseEntity<>( "{\"uuid\"" + fileName + "/}", HttpStatus.OK);
@@ -102,7 +109,7 @@ public class BillServiceImpl implements BillService {
             bill.setContactNumber((String)requestMap.get("contactNumber"));
             bill.setPaymentMethod((String)requestMap.get("paymentMethod"));
             bill.setTotal(Integer.parseInt((String) requestMap.get("totalAmount")));
-            bill.setProductDetail((String) requestMap.get("productDetail"));
+            bill.setProductDetail((String) requestMap.get("productDetails"));
             bill.setCreateBy(jwtFilter.getCurrentUser());
             billDao.save(bill);
         }catch (Exception ex){
@@ -126,7 +133,7 @@ public class BillServiceImpl implements BillService {
         rect.enableBorderSide(2);
         rect.enableBorderSide(4);
         rect.enableBorderSide(8);
-        rect.setBackgroundColor(BaseColor.BLACK);
+        rect.setBorderColor(BaseColor.BLACK);
         rect.setBorderWidth(1);
         document.add(rect);
     }
@@ -171,6 +178,62 @@ public class BillServiceImpl implements BillService {
         table.addCell((String) data.get("quantity"));
         table.addCell(Double.toString((Double) data.get("price")));
         table.addCell(Double.toString((Double) data.get("total")));
+    }
+
+    @Override
+    public ResponseEntity<List<Bill>> getBills() {
+        List<Bill> list = new ArrayList<>();
+        if(jwtFilter.isAdmin()) {
+            list = billDao.getAllBills();
+        }else {
+            list = billDao.getBillByUserName(jwtFilter.getCurrentUser());
+        }
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<byte[]> getPdf(Map<String, Object> requestMap) {
+        log.info("Inside getPdf : requestMap {}", requestMap);
+        try{
+            byte[] byteArray = new byte[0];
+            if(!requestMap.containsKey("uuid") && validateRequestMap(requestMap))
+                return new ResponseEntity<>(byteArray, HttpStatus.BAD_REQUEST);
+                String filePath = ShopConstants.STORE_LOCATION +"\\"+(String) requestMap.get("uuid") + ".pdf";
+           if(ShopUtils.isFileExist(filePath)){
+               byteArray = getByteArray(filePath);
+               return new ResponseEntity<>(byteArray, HttpStatus.OK);
+           }else{
+               requestMap.put("isGenerate",false);
+               generateReport(requestMap);
+               byteArray = getByteArray(filePath);
+               return new ResponseEntity<>(byteArray,HttpStatus.OK);
+           }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    private byte[] getByteArray(String filePath) throws Exception{
+        File initialFile = new File(filePath);
+        InputStream targetStream = new FileInputStream(initialFile);
+        byte[] byteArray = IOUtils.toByteArray(targetStream);
+        targetStream.close();
+        return byteArray;
+    }
+
+    @Override
+    public ResponseEntity<String> deleteBill(Integer id) {
+        try{
+            Optional optional = billDao.findById(id);
+            if(!optional.isEmpty()){
+                billDao.deleteById(id);
+                return ShopUtils.getResponseEntity("Bill Deleted Succsessfully", HttpStatus.OK);
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return ShopUtils.getResponseEntity(ShopConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
